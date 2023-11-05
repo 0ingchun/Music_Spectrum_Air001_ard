@@ -4,6 +4,8 @@
 #define MIC_PIN PA_0
 #define SCREEN_WIDTH 8
 #define SCREEN_HEIGHT 8
+// 麦克风接收放大倍数
+#define MIC_AMP_NUM 4
 // 采样点数量
 #define SAMPLES 32
 // 采样频率
@@ -102,7 +104,7 @@ void get_band_peak() {
   for (int i = 0; i < SAMPLES; i++) {
     pretime = micros();
     analogReadResolution(12);
-    vReal[i] = analogRead(MIC_PIN);
+    vReal[i] = analogRead(MIC_PIN)*MIC_AMP_NUM;
     vImag[i] = 0.0;
     // 如果ADC转化时间大于采样时间，就进行下一次采样，否则就等待
     while (micros() < (pretime + sampling_period_us))

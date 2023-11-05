@@ -12,6 +12,7 @@
  2. 软件顶部工具栏，clock source and Frequency把Air001主频调到HSI 24 MHz，HCLK 48MHz的组合。
  3. 更改代码优化等级，顶部工具栏optimize修改为第二项（smallest（-OS）with LTO），不然会flash over flow
  4. ws2812b链接vbus或5v，不要连接3.3v
+ 5. 若麦克风没有放大元器件，调整MIC_AMP_NUM，麦克风接收放大倍率
 
 ## 关于亮度的问题
 > 可以在myws2812.cpp文件中等比例修改除数的值，从而改变灯的亮度,例如:
