@@ -3,7 +3,9 @@
 #define CODE_1 (0xF8)
 #define CODE_0 (0xC0)
 uint8_t brightness = 50;
+uint8_t bright_num = 5;
 static uint8_t LED_MATRIX[64][3] = { 0 };
+
 void myWs2812b::Writebit(uint8_t bit) {
   
   if (bit) {
@@ -47,9 +49,12 @@ void myWs2812b::Reset() {
 }
 void myWs2812b::SetLedColor(uint8_t ledid, uint8_t r, uint8_t g, uint8_t b) {
   // 这里可以更改后面的数值调节亮度，不除的话，亮度比较高，发热比较严重
-  LED_MATRIX[ledid][0] = r/5;
-  LED_MATRIX[ledid][1] = g/5;
-  LED_MATRIX[ledid][2] = b/5;
+  LED_MATRIX[ledid][0] = r / bright_num;
+  LED_MATRIX[ledid][1] = g / bright_num;
+  LED_MATRIX[ledid][2] = b / bright_num;
+  // LED_MATRIX[ledid][0] = r /5;
+  // LED_MATRIX[ledid][1] = g /5;
+  // LED_MATRIX[ledid][2] = b /5;
 }
 
 

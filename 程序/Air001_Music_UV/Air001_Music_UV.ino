@@ -5,7 +5,7 @@
 #define SCREEN_WIDTH 8
 #define SCREEN_HEIGHT 8
 // 麦克风接收放大倍数
-#define MIC_AMP_NUM 4
+#define MIC_AMP_NUM 1.0
 // 采样点数量
 #define SAMPLES 32
 // 采样频率
@@ -43,25 +43,32 @@ arduinoFFT fft = arduinoFFT(vReal, vImag, SAMPLES, SAMPLINGFREQUENCY);
 
 #define Button3 PB_3
 
-bool Button_flag = true;
-void onChange() {
-  // delay(10);
-  // if(digitalRead(Button_PIN) == HIGH)
-  // {
-    // while(digitalRead(Button_PIN) == HIGH)
-    // {
-    //   delay(1);
-    //   }
-    Button_flag = !Button_flag;
-    // Serial.println(Button_flag);
-    // Serial.println(" : Button Switch!");
-  // }
+int Button_flag = 3;
+#define BUTTON_FLAG_MAX 4
+#define BUTTON_FLAG_MIN 0
 
-  // while(!Botton_flag){
-  //     WS2812b_Panel.Clear();
-  //   delay(2);
-  // }
-  //   WS2812b_Panel.Show();
+void onChange() {
+  Serial.println(" : Button Switch!");
+
+  delay(10);
+  if (digitalRead(Button3) == HIGH)
+  {
+    // Button_flag = !Button_flag;
+    Button_flag ++;
+    if (Button_flag > BUTTON_FLAG_MAX) Button_flag = BUTTON_FLAG_MIN;
+    else if (Button_flag < BUTTON_FLAG_MIN) Button_flag = BUTTON_FLAG_MAX;
+  }
+
+  // 改变亮度
+  if (Button_flag == 0) WS2812b_Panel.bright_num = 0; // flag为0为空屏幕
+  else if (Button_flag == 1) WS2812b_Panel.bright_num = 80;
+  else if (Button_flag == 2) WS2812b_Panel.bright_num = 18;
+  else if (Button_flag == 3) WS2812b_Panel.bright_num = 9;
+  else if (Button_flag == 4) WS2812b_Panel.bright_num = 4;
+
+  Serial.println(Button_flag);
+  Serial.println(WS2812b_Panel.bright_num);
+
 }
 
 void setup() {
@@ -81,11 +88,11 @@ void setup() {
 }
 
 void loop() {
-  while(!Button_flag){
-    WS2812b_Panel.Clear();
-    delay(5);
-  }
-
+  // while(!Button_flag){
+  //   WS2812b_Panel.Clear();
+  //   delay(5);
+  // }
+  
   n++;
   if (n == 200) {
     n = 0;m++;

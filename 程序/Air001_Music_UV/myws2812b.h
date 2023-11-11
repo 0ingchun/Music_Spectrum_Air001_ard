@@ -3,6 +3,7 @@
 #include <Arduino.h>
 class myWs2812b {
 public:
+  uint8_t bright_num;
   void SetLedColor(uint8_t ledid, uint8_t r, uint8_t g, uint8_t b);
   void Reset();
   void Clear();
